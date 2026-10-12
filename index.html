@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>國文 1–3 課 翻卡複習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF2EC; --card:#FFFFFF; --ink:#1F2A24; --muted:#5E6B63;
+  --red:#C8342B; --hl:#F6E36B; --grid:#D9C4C1; --line:#C9D3CB; --ok:#2F7A4F;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#18201B; --card:#222C26; --ink:#E9EEE9; --muted:#9EAAA2;
+    --red:#F07468; --hl:#6E5F12; --grid:#5A3F3C; --line:#36433B; --ok:#6FC394;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#18201B; --card:#222C26; --ink:#E9EEE9; --muted:#9EAAA2;
+  --red:#F07468; --hl:#6E5F12; --grid:#5A3F3C; --line:#36433B; --ok:#6FC394;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%; scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0; min-height:100%; background:var(--paper); color:var(--ink);
+  font-family:"LXGW WenKai TC","BiauKai","DFKai-SB","Kaiti TC","PingFang TC","Noto Sans TC",serif; line-height:1.6}
+main{max-width:560px; margin:0 auto; padding:16px 16px 40px}
+h1{font-size:1.35rem; margin:4px 0 12px}
+.tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px}
+button{font:inherit; color:var(--ink)}
+.tabs button,.ctrl button,.small{border:1.5px solid var(--line); background:var(--card); border-radius:999px; padding:6px 14px; cursor:pointer; font-size:1rem}
+.tabs button[aria-pressed="true"]{background:var(--ink); color:var(--card); border-color:var(--ink)}
+.status{display:flex; justify-content:space-between; color:var(--muted); font-size:.95rem; margin:6px 2px}
+.filter{display:flex; align-items:center; gap:6px; cursor:pointer}
+.scene{perspective:1200px; margin:6px 0 14px}
+.flip{position:relative; width:100%; aspect-ratio:4/3.4; transition:transform .5s; transform-style:preserve-3d; cursor:pointer}
+.flip.on{transform:rotateY(180deg)}
+.face{transition:visibility 0s .25s}
+.flip.on .front{visibility:hidden}
+.flip:not(.on) .back{visibility:hidden}
+@media (prefers-reduced-motion: reduce){.flip,.face{transition:none}}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:var(--card);
+  border-radius:18px; border:1.5px solid var(--line); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; overflow:auto}
+.tag{position:absolute; top:12px; left:16px; color:var(--red); font-size:.95rem}
+.editBtn{position:absolute; top:8px; right:10px; border:1.5px solid var(--line); background:var(--card); border-radius:999px; padding:2px 12px; font-size:.9rem; cursor:pointer}
+.word{display:flex; gap:6px; flex-wrap:wrap; justify-content:center}
+.cell{width:clamp(64px,19vw,96px); aspect-ratio:1; border:2px solid var(--red); position:relative; display:flex; align-items:center; justify-content:center; font-size:clamp(42px,13vw,66px)}
+.cell::before{content:""; position:absolute; left:50%; top:0; bottom:0; border-left:1.5px dashed var(--grid)}
+.cell::after{content:""; position:absolute; top:50%; left:0; right:0; border-top:1.5px dashed var(--grid)}
+.cell span{position:relative; z-index:1}
+.word.long .cell{width:clamp(46px,13vw,68px); font-size:clamp(28px,9vw,46px)}
+.hint{position:absolute; bottom:12px; color:var(--muted); font-size:.9rem}
+.back{transform:rotateY(180deg); align-items:flex-start; justify-content:flex-start; padding-top:44px}
+.back h2{margin:0 0 4px; font-size:1.7rem}
+.zy{display:inline-block; background:var(--hl); padding:0 8px; border-radius:4px; font-size:1.2rem; margin-bottom:10px}
+.mean{font-size:1.15rem; margin:0 0 10px}
+.extra{font-size:1.02rem; border-top:1.5px dashed var(--line); padding-top:8px; width:100%; white-space:pre-line}
+.ctrl{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px}
+.ctrl button{border-radius:12px; padding:10px 6px}
+.ctrl .know{border-color:var(--ok); color:var(--ok)}
+.ctrl .dunno{border-color:var(--red); color:var(--red)}
+.row2{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap}
+.empty{text-align:center; color:var(--muted)}
+details{margin-top:18px; background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:10px 14px}
+summary{cursor:pointer; font-size:1.05rem}
+.list{margin-top:8px}
+.list div{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:6px 0; border-bottom:1px dashed var(--line)}
+.list .w{flex:1}
+.list .w small{color:var(--muted)}
+.list .m{font-size:.95rem; min-width:1.4em; text-align:center}
+.list .m.k{color:var(--ok)} .list .m.d{color:var(--red)}
+.list button{background:none; border:none; color:var(--red); cursor:pointer; padding:4px 6px}
+dialog{border:none; border-radius:16px; padding:0; width:min(520px,94vw); background:var(--card); color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+form{display:grid; gap:8px; padding:16px}
+form h3{margin:0}
+label{font-size:.95rem; color:var(--muted)}
+input,textarea,select{font:inherit; width:100%; padding:8px 10px; border-radius:8px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink)}
+textarea{min-height:70px}
+.btns{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+.btns .danger{color:var(--red); border-color:var(--red)}
+.btns .primary{background:var(--ink); color:var(--card); border-color:var(--ink)}
+button:focus-visible,.flip:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--red); outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+  <h1>國文第 1–3 課・翻卡複習</h1>
+  <div class="tabs" id="tabs"></div>
+  <div class="status">
+    <span id="count"></span>
+    <label class="filter"><input type="checkbox" id="onlyWeak" style="width:auto"> 只看不熟的</label>
+  </div>
+  <div id="stage"></div>
+  <div class="ctrl">
+    <button id="prev">← 上一張</button>
+    <button id="flipBtn">翻面</button>
+    <button id="next">下一張 →</button>
+  </div>
+  <div class="ctrl" style="margin-top:8px">
+    <button class="dunno" id="dunno">✗ 不熟</button>
+    <button id="shuffle">洗牌</button>
+    <button class="know" id="know">✓ 會了</button>
+  </div>
+  <div class="row2">
+    <button class="small" id="addBtn">＋ 新增卡片</button>
+    <button class="small" id="resetMarks">清除會了／不熟紀錄</button>
+  </div>
+
+  <details>
+    <summary>卡片清單（檢查、修改辨識錯誤）</summary>
+    <div class="list" id="list"></div>
+    <div class="row2"><button class="small" id="restoreAll">全部還原成原始內容</button><button class="small" id="exportBtn">匯出我的修改</button></div>
+    <textarea id="exportBox" readonly style="display:none;margin-top:8px;min-height:120px;font-size:.8rem"></textarea>
+    <p id="exportHint" style="display:none;color:var(--muted);font-size:.9rem;margin:6px 0 0">全選上面的文字、複製，貼給 Claude，就能把修改直接寫進分享版。</p>
+  </details>
+</main>
+
+<dialog id="dlg">
+  <form id="editForm" method="dialog">
+    <h3 id="dlgTitle">修改卡片</h3>
+    <div><label for="fLesson">課次</label>
+      <select id="fLesson"><option value="1">第 1 課</option><option value="2">第 2 課</option><option value="3">第 3 課</option></select></div>
+    <div><label for="fWord">詞語（正面）</label><input id="fWord" required></div>
+    <div><label for="fZy">注音</label><input id="fZy"></div>
+    <div><label for="fMean">註釋</label><textarea id="fMean" required></textarea></div>
+    <div><label for="fExtra">補充（筆記、近義、反義、易混字，可換行）</label><textarea id="fExtra"></textarea></div>
+    <div class="btns">
+      <button type="button" class="small danger" id="delBtn">刪除這張</button>
+      <button type="button" class="small" id="revertBtn">還原原始</button>
+      <button type="button" class="small" id="cancelBtn">取消</button>
+      <button type="submit" class="small primary">儲存</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const BASE = [
+  // 第 1 課
+  {id:"1-02",lesson:1,word:"滂沱",zy:"ㄆㄤ ㄊㄨㄛˊ",mean:"雨勢盛大的樣子。",extra:""},
+  {id:"1-03",lesson:1,word:"霹靂環起",zy:"霹靂：ㄆㄧ ㄌㄧˋ",mean:"急而響的雷聲四處響起。霹靂：急而響的雷聲。",extra:"霹、靂都是「雨」部"},
+  {id:"1-04",lesson:1,word:"霎時間",zy:"霎：ㄕㄚˋ",mean:"極短的時間。霎：短暫的。",extra:"近義：剎那、頃刻、瞬時、俄頃、倏忽、彈指、眨眼\n反義：亙古"},
+  {id:"1-05",lesson:1,word:"攫",zy:"ㄐㄩㄝˊ",mean:"用爪抓取。",extra:""},
+  {id:"1-06",lesson:1,word:"孤伶伶",zy:"伶：ㄌㄧㄥˊ",mean:"孤單的樣子。亦作「孤零零」。",extra:""},
+  {id:"1-08",lesson:1,word:"震懾",zy:"懾：ㄓㄜˊ",mean:"震驚恐懼。懾：恐懼。",extra:"易混：懾（恐懼）≠ 攝（攝取、攝影）"},
+  {id:"1-09",lesson:1,word:"氣餒萎頓",zy:"",mean:"失神無力，疲乏困頓。",extra:""},
+  {id:"1-10",lesson:1,word:"匍匐",zy:"ㄆㄨˊ ㄈㄨˊ",mean:"伏地爬行。",extra:""},
+  {id:"1-11",lesson:1,word:"肆虐",zy:"肆：ㄙˋ",mean:"任意作惡為害。肆：放縱、任意。",extra:"相關：放肆、肆無忌憚\n虐：部首「虍」"},
+  {id:"1-12",lesson:1,word:"蘇醒",zy:"",mean:"清醒過來。亦作「甦醒」。",extra:""},
+  {id:"1-13",lesson:1,word:"氣勢萬鈞",zy:"鈞：ㄐㄩㄣ",mean:"形容氣勢雄偉壯盛。鈞：古代的重量單位，三十斤為一鈞。",extra:"近義：雷霆萬鈞、磅礴\n相關：千鈞一髮（危險）\n反義：氣若游絲、奄奄一息"},
+  {id:"1-14",lesson:1,word:"逞",zy:"ㄔㄥˇ",mean:"顯露、展示。",extra:"例：逞強、逞威風"},
+  {id:"1-15",lesson:1,word:"劈殺",zy:"劈：ㄆㄧ",mean:"砍殺。",extra:"例：天打雷劈、劈頭（朝著）"},
+  {id:"1-16",lesson:1,word:"行潦",zy:"ㄒㄧㄥˊ ㄌㄠˇ",mean:"因下雨而匯流於道旁的流水。潦：積水。",extra:"形近字：燎、撩、瞭"},
+  {id:"1-17",lesson:1,word:"登時",zy:"",mean:"立刻。",extra:"近義：立即、馬上"},
+  {id:"1-18",lesson:1,word:"笠",zy:"ㄌㄧˋ",mean:"用竹片編成的帽子。",extra:""},
+  {id:"1-19",lesson:1,word:"簑衣",zy:"簑：ㄙㄨㄛ",mean:"用草或棕葉編成的雨衣。",extra:""},
+  // 第 2 課
+  {id:"2-01",lesson:2,word:"迢迢",zy:"迢：ㄊㄧㄠˊ",mean:"遙遠的樣子。",extra:"疊字（形容詞）"},
+  {id:"2-03",lesson:2,word:"皎皎",zy:"皎：ㄐㄧㄠˇ",mean:"明亮的樣子。",extra:"相關：皎潔\n皚皚、皓、皤（ㄆㄛˊ）都有「白」的意思"},
+  {id:"2-05",lesson:2,word:"纖纖",zy:"纖：ㄒㄧㄢ",mean:"細長柔美的樣子。",extra:"疊字（形容詞）；纖細"},
+  {id:"2-06",lesson:2,word:"擢素手",zy:"擢：ㄓㄨㄛˊ",mean:"舉起白嫩的手。擢：舉起。",extra:"拔擢：提拔人才\n洗濯（ㄓㄨㄛˊ）：洗"},
+  {id:"2-07",lesson:2,word:"札札",zy:"札：ㄓㄚˊ",mean:"此指織布的聲音。",extra:"狀聲詞"},
+  {id:"2-08",lesson:2,word:"機杼",zy:"杼：ㄓㄨˋ",mean:"指織布機。杼：織布機的梭子。",extra:"自出機杼＝別出心裁\n反義：拾人牙慧"},
+  {id:"2-09",lesson:2,word:"終日",zy:"",mean:"整天。",extra:"近義：鎮日"},
+  {id:"2-10",lesson:2,word:"成章",zy:"",mean:"織成布匹。章：織品上縱橫交錯的紋理。",extra:"匹：ㄆㄧ\n相關：出口成章（文思泉湧）"},
+  // ── 第 2 課其餘卡片與第 3 課：原稿貼上時被截斷，請補上後加入這裡 ──
+];
+
+/* ---------- 儲存 ---------- */
+const LS_EDITS = "gw-flash-edits-v1", LS_MARKS = "gw-flash-marks-v1";
+function load(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+let store = load(LS_EDITS, {edits:{}, deleted:[], added:[]});
+if(!store.edits) store.edits = {}; if(!store.deleted) store.deleted = []; if(!store.added) store.added = [];
+let marks = load(LS_MARKS, {});
+
+/* ---------- 資料 ---------- */
+function allCards(){
+  const base = BASE.filter(c => !store.deleted.includes(c.id))
+    .map(c => Object.assign({}, c, store.edits[c.id] || {}, {base:true}));
+  const added = store.added.map(c => Object.assign({}, c, {base:false}));
+  return base.concat(added).sort((a,b) => (a.lesson - b.lesson) || a.id.localeCompare(b.id));
+}
+function cardById(id){ return allCards().find(c => c.id === id); }
+
+/* ---------- 狀態 ---------- */
+let lessonFilter = 0;   // 0 = 全部
+let onlyWeak = false;
+let deck = [];          // 目前牌組的 id 順序
+let idx = 0;
+let flipped = false;
+
+function buildDeck(keepId){
+  deck = allCards()
+    .filter(c => !lessonFilter || c.lesson === lessonFilter)
+    .filter(c => !onlyWeak || marks[c.id] === "dunno")
+    .map(c => c.id);
+  const k = keepId ? deck.indexOf(keepId) : -1;
+  idx = k >= 0 ? k : Math.min(idx, Math.max(deck.length - 1, 0));
+  flipped = false;
+}
+
+/* ---------- 工具 ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const lessonName = n => "第 " + n + " 課";
+
+/* ---------- 畫面 ---------- */
+function renderTabs(){
+  const tabs = $("#tabs"); tabs.innerHTML = "";
+  [0,1,2,3].forEach(n => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = n ? lessonName(n) : "全部";
+    b.setAttribute("aria-pressed", String(n === lessonFilter));
+    b.onclick = () => { lessonFilter = n; idx = 0; buildDeck(); renderAll(); };
+    tabs.appendChild(b);
+  });
+}
+
+function renderStage(){
+  const stage = $("#stage");
+  if(!deck.length){
+    stage.innerHTML = '<div class="scene"><p class="empty">' + (onlyWeak ? "這個範圍沒有標成「不熟」的卡片。" : "這個範圍還沒有卡片，按「＋ 新增卡片」加入。") + "</p></div>";
+    $("#count").textContent = "0 / 0";
+    return;
+  }
+  const c = cardById(deck[idx]);
+  const mark = marks[c.id] === "know" ? "・✓ 會了" : marks[c.id] === "dunno" ? "・✗ 不熟" : "";
+  const chars = Array.from(c.word);
+  const cells = chars.map(ch => '<div class="cell"><span>' + esc(ch) + "</span></div>").join("");
+  stage.innerHTML =
+    '<div class="scene"><div class="flip' + (flipped ? " on" : "") + '" id="flip" tabindex="0" role="button" aria-label="翻面">' +
+      '<div class="face front">' +
+        '<span class="tag">' + lessonName(c.lesson) + esc(mark) + "</span>" +
+        '<button type="button" class="editBtn" id="editCur">修改</button>' +
+        '<div class="word' + (chars.length > 3 ? " long" : "") + '">' + cells + "</div>" +
+        '<span class="hint">點一下翻面</span>' +
+      "</div>" +
+      '<div class="face back">' +
+        '<span class="tag">' + lessonName(c.lesson) + esc(mark) + "</span>" +
+        "<h2>" + esc(c.word) + "</h2>" +
+        (c.zy ? '<span class="zy">' + esc(c.zy) + "</span>" : "") +
+        '<p class="mean">' + esc(c.mean) + "</p>" +
+        (c.extra ? '<div class="extra">' + esc(c.extra) + "</div>" : "") +
+      "</div>" +
+    "</div></div>";
+  const weakN = allCards().filter(x => (!lessonFilter || x.lesson === lessonFilter) && marks[x.id] === "dunno").length;
+  $("#count").textContent = (idx + 1) + " / " + deck.length + (weakN ? "　不熟 " + weakN : "");
+
+  const flip = $("#flip");
+  flip.onclick = toggleFlip;
+  flip.onkeydown = e => { if(e.key === " " || e.key === "Enter"){ e.preventDefault(); toggleFlip(); } };
+  $("#editCur").onclick = e => { e.stopPropagation(); openEdit(c.id); };
+}
+
+function renderList(){
+  const list = $("#list"); list.innerHTML = "";
+  allCards().forEach(c => {
+    const row = document.createElement("div");
+    const m = marks[c.id];
+    row.innerHTML =
+      '<span class="w">' + esc(c.word) + (c.zy ? " <small>" + esc(c.zy) + "</small>" : "") +
+        " <small>" + lessonName(c.lesson) + (c.base ? "" : "・自訂") + (store.edits[c.id] ? "・已修改" : "") + "</small></span>" +
+      '<span class="m ' + (m === "know" ? "k" : m === "dunno" ? "d" : "") + '">' + (m === "know" ? "✓" : m === "dunno" ? "✗" : "") + "</span>";
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = "修改";
+    b.onclick = () => openEdit(c.id);
+    row.appendChild(b);
+    list.appendChild(row);
+  });
+}
+
+function renderAll(){ renderTabs(); renderStage(); renderList(); }
+
+/* ---------- 操作 ---------- */
+function toggleFlip(){
+  flipped = !flipped;
+  const f = $("#flip"); if(f) f.classList.toggle("on", flipped);
+}
+function go(d){
+  if(!deck.length) return;
+  idx = (idx + d + deck.length) % deck.length;
+  flipped = false; renderStage();
+}
+function mark(v){
+  if(!deck.length) return;
+  const id = deck[idx];
+  marks[id] = v; save(LS_MARKS, marks);
+  if(onlyWeak && v === "know"){
+    deck.splice(idx, 1);
+    if(idx >= deck.length) idx = 0;
+    flipped = false; renderStage(); renderList();
+  } else {
+    renderList();
+    go(1);
+  }
+}
+
+$("#prev").onclick = () => go(-1);
+$("#next").onclick = () => go(1);
+$("#flipBtn").onclick = toggleFlip;
+$("#know").onclick = () => mark("know");
+$("#dunno").onclick = () => mark("dunno");
+$("#shuffle").onclick = () => {
+  for(let i = deck.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [deck[i], deck[j]] = [deck[j], deck[i]]; }
+  idx = 0; flipped = false; renderStage();
+};
+$("#onlyWeak").onchange = e => { onlyWeak = e.target.checked; idx = 0; buildDeck(); renderAll(); };
+$("#resetMarks").onclick = () => {
+  if(!confirm("清除所有「會了／不熟」紀錄？")) return;
+  marks = {}; save(LS_MARKS, marks); idx = 0; buildDeck(); renderAll();
+};
+$("#restoreAll").onclick = () => {
+  if(!confirm("把所有卡片還原成原始內容？自訂新增的卡片也會刪除。")) return;
+  store = {edits:{}, deleted:[], added:[]}; save(LS_EDITS, store); idx = 0; buildDeck(); renderAll();
+};
+$("#exportBtn").onclick = () => {
+  const box = $("#exportBox");
+  box.style.display = "block"; $("#exportHint").style.display = "block";
+  box.value = JSON.stringify(store, null, 1);
+  box.focus(); box.select();
+};
+
+document.addEventListener("keydown", e => {
+  if($("#dlg").open) return;
+  const t = e.target;
+  if(t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT")) return;
+  if(e.key === "ArrowLeft") go(-1);
+  else if(e.key === "ArrowRight") go(1);
+  else if(e.key === "1") mark("dunno");
+  else if(e.key === "2") mark("know");
+});
+
+/* ---------- 編輯對話框 ---------- */
+const dlg = $("#dlg");
+let editingId = null;
+
+function openEdit(id){
+  editingId = id;
+  const c = id ? cardById(id) : null;
+  $("#dlgTitle").textContent = c ? "修改卡片" : "新增卡片";
+  $("#fLesson").value = String(c ? c.lesson : (lessonFilter || 1));
+  $("#fWord").value = c ? c.word : "";
+  $("#fZy").value = c ? c.zy : "";
+  $("#fMean").value = c ? c.mean : "";
+  $("#fExtra").value = c ? c.extra : "";
+  $("#delBtn").style.display = c ? "" : "none";
+  $("#revertBtn").style.display = (c && c.base && store.edits[c.id]) ? "" : "none";
+  dlg.showModal();
+  $("#fWord").focus();
+}
+$("#addBtn").onclick = () => openEdit(null);
+$("#cancelBtn").onclick = () => dlg.close();
+
+$("#editForm").onsubmit = e => {
+  e.preventDefault();
+  const data = {
+    lesson: +$("#fLesson").value,
+    word: $("#fWord").value.trim(),
+    zy: $("#fZy").value.trim(),
+    mean: $("#fMean").value.trim(),
+    extra: $("#fExtra").value.trim()
+  };
+  if(!data.word || !data.mean) return;
+  let keep;
+  if(!editingId){
+    const id = "u-" + Date.now().toString(36);
+    store.added.push(Object.assign({id}, data)); keep = id;
+  } else {
+    const c = cardById(editingId);
+    if(c.base){
+      const orig = BASE.find(b => b.id === editingId);
+      const same = ["lesson","word","zy","mean","extra"].every(k => orig[k] === data[k]);
+      if(same) delete store.edits[editingId]; else store.edits[editingId] = data;
+    } else {
+      const i = store.added.findIndex(a => a.id === editingId);
+      if(i >= 0) store.added[i] = Object.assign({id: editingId}, data);
+    }
+    keep = editingId;
+  }
+  save(LS_EDITS, store);
+  dlg.close();
+  buildDeck(keep); renderAll();
+};
+
+$("#delBtn").onclick = () => {
+  if(!editingId) return;
+  const c = cardById(editingId);
+  if(!confirm("刪除「" + c.word + "」這張卡片？")) return;
+  if(c.base){ if(!store.deleted.includes(editingId)) store.deleted.push(editingId); delete store.edits[editingId]; }
+  else store.added = store.added.filter(a => a.id !== editingId);
+  delete marks[editingId]; save(LS_MARKS, marks);
+  save(LS_EDITS, store);
+  dlg.close();
+  buildDeck(); renderAll();
+};
+
+$("#revertBtn").onclick = () => {
+  if(!editingId) return;
+  delete store.edits[editingId]; save(LS_EDITS, store);
+  dlg.close();
+  buildDeck(editingId); renderAll();
+};
+
+/* ---------- 啟動 ---------- */
+buildDeck(); renderAll();
+</script>
+</body>
+</html>
