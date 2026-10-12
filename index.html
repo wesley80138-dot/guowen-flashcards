@@ -71,8 +71,6 @@ summary{cursor:pointer; font-size:1.05rem}
 .list div{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:6px 0; border-bottom:1px dashed var(--line)}
 .list .w{flex:1}
 .list .w small{color:var(--muted)}
-.list .m{font-size:.95rem; min-width:1.4em; text-align:center}
-.list .m.k{color:var(--ok)} .list .m.d{color:var(--red)}
 .list button{background:none; border:none; color:var(--red); cursor:pointer; padding:4px 6px}
 dialog{border:none; border-radius:16px; padding:0; width:min(520px,94vw); background:var(--card); color:var(--ink)}
 dialog::backdrop{background:rgba(0,0,0,.4)}
@@ -167,248 +165,156 @@ const BASE = [
   {id:"2-08",lesson:2,word:"機杼",zy:"ㄐㄧ ㄓㄨˋ",mean:"指織布機。杼：織布機的梭子。",extra:"自出機杼＝別出心裁\n反義：拾人牙慧"},
   {id:"2-09",lesson:2,word:"終日",zy:"ㄓㄨㄥ ㄖˋ",mean:"整天。",extra:"近義：鎮日"},
   {id:"2-10",lesson:2,word:"成章",zy:"ㄔㄥˊ ㄓㄤ",mean:"織成布匹。章：織品上縱橫交錯的紋理。",extra:"匹：ㄆㄧ\n相關：出口成章（文思泉湧）"},
-  // ── 第 2 課其餘卡片與第 3 課：原稿貼上時被截斷，請補上後加入這裡 ──
+  {id:"2-11",lesson:2,word:"泣涕零如雨",zy:"ㄑㄧˋ ㄊㄧˋ ㄌㄧㄥˊ ㄖㄨˊ ㄩˇ",mean:"眼淚如雨般落下。零：落。",extra:"古代「涕」指眼淚，「泗」指鼻涕"},
+  {id:"2-12",lesson:2,word:"去",zy:"ㄑㄩˋ",mean:"距離。",extra:""},
+  {id:"2-13",lesson:2,word:"復幾許",zy:"ㄈㄨˋ ㄐㄧˇ ㄒㄩˇ",mean:"又有多少呢？",extra:""},
+  {id:"2-14",lesson:2,word:"盈盈",zy:"ㄧㄥˊ ㄧㄥˊ",mean:"水清淺的樣子。",extra:"盈：滿溢、豐盈"},
+  {id:"2-15",lesson:2,word:"脈脈",zy:"ㄇㄛˋ ㄇㄛˋ",mean:"含情凝視的樣子。",extra:""},
+  {id:"2-21",lesson:2,word:"啞啞",zy:"ㄧㄚ ㄧㄚ",mean:"形容烏鴉的叫聲。",extra:"沙啞的啞念ㄧㄚˇ"},
+  {id:"2-22",lesson:2,word:"經年",zy:"ㄐㄧㄥ ㄋㄧㄢˊ",mean:"形容時間長久。",extra:""},
+  {id:"2-23",lesson:2,word:"沾襟",zy:"ㄓㄢ ㄐㄧㄣ",mean:"眼淚沾溼衣襟。襟：上衣胸前交疊的部分。",extra:"正襟危坐（嚴肅）\n捉襟見肘（ㄓㄡˇ）"},
+  {id:"2-24",lesson:2,word:"反哺",zy:"ㄈㄢˇ ㄅㄨˇ",mean:"報答父母的恩情。",extra:"烏鴉反哺、羊羔跪乳（孝順）\n相關：哺乳、嗷嗷待哺、吐哺握髮\n形近：埔、圃"},
+  {id:"2-25",lesson:2,word:"爾",zy:"ㄦˇ",mean:"你。",extra:"同義：汝、乃、若"},
+  {id:"2-26",lesson:2,word:"任",zy:"ㄖㄣˊ",mean:"承受。",extra:""},
+  {id:"2-27",lesson:2,word:"母歿喪不臨",zy:"ㄇㄨˇ ㄇㄛˋ ㄙㄤ ㄅㄨˋ ㄌㄧㄣˊ",mean:"母親去世卻不回家奔喪。歿：去世。喪不臨，即「不臨喪」，不去奔喪的意思。",extra:"倒裝句\n歿：逝世、過世、往生、撒手人寰"},
+  {id:"2-28",lesson:2,word:"嗟哉",zy:"ㄐㄧㄝ ㄗㄞ",mean:"嘆詞。",extra:"相關：嗚呼哀哉"},
+  {id:"2-29",lesson:2,word:"斯徒輩",zy:"ㄙ ㄊㄨˊ ㄅㄟˋ",mean:"這一類的人。斯：此、這。徒、輩都是「類」的意思。",extra:"徒＝輩＝類＝倫\n斯＝此＝茲（念茲在茲）"},
+  {id:"2-30",lesson:2,word:"復",zy:"ㄈㄨˋ",mean:"助詞，無義。",extra:""},
+  // 第 3 課
+  {id:"3-01",lesson:3,word:"魂牽夢縈",zy:"ㄏㄨㄣˊ ㄑㄧㄢ ㄇㄥˋ ㄧㄥˊ",mean:"形容極為思念，連夢中都無法忘懷。縈：旋繞。",extra:"相關：日有所思，夜有所夢"},
+  {id:"3-02",lesson:3,word:"長工",zy:"ㄔㄤˊ ㄍㄨㄥ",mean:"長期僱用的工人。",extra:""},
+  {id:"3-03",lesson:3,word:"熹微",zy:"ㄒㄧ ㄨㄟˊ",mean:"陽光微弱的樣子。熹：明亮。",extra:"相關：晨光、黎明、拂曉、破曉"},
+  {id:"3-04",lesson:3,word:"啟蒙",zy:"ㄑㄧˇ ㄇㄥˊ",mean:"開導、啟發。蒙：無知、不懂事理。",extra:""},
+  {id:"3-06",lesson:3,word:"布姑娘",zy:"ㄅㄨˋ ㄍㄨ ㄋㄧㄤˊ",mean:"布做的人形玩偶。",extra:"相關：絨毛、毛茸茸（ㄖㄨㄥˊ）"},
+  {id:"3-07",lesson:3,word:"吱嗒",zy:"ㄓ ㄉㄚ",mean:"形容在泥地中踩水所發出的聲響。",extra:"狀聲詞\n易混：輕脆（聲音）≠ 青翠（顏色）"},
+  {id:"3-08",lesson:3,word:"黃梅天",zy:"ㄏㄨㄤˊ ㄇㄟˊ ㄊㄧㄢ",mean:"此時梅子變黃成熟。",extra:"又稱梅雨季"},
+  {id:"3-11",lesson:3,word:"亮晃晃",zy:"ㄌㄧㄤˋ ㄏㄨㄤˇ ㄏㄨㄤˇ",mean:"明亮閃爍的樣子。",extra:"晃動的晃念ㄏㄨㄤˋ"},
+  {id:"3-16",lesson:3,word:"幽幽",zy:"ㄧㄡ ㄧㄡ",mean:"形容聲音輕微。",extra:"幽：①深遠、安靜（幽遠、幽靜、清幽）②不公開的（幽會）③昏暗（幽暗）"}
 ];
 
-/* ---------- 儲存 ---------- */
-const LS_EDITS = "gw-flash-edits-v1", LS_MARKS = "gw-flash-marks-v1";
-function load(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } }
-function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-let store = load(LS_EDITS, {edits:{}, deleted:[], added:[]});
-if(!store.edits) store.edits = {}; if(!store.deleted) store.deleted = []; if(!store.added) store.added = [];
-let marks = load(LS_MARKS, {});
+const store = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+};
+let custom = store.get("fc2_custom", []);
+let edits  = store.get("fc2_edits", {});
+let hidden = store.get("fc2_hidden", []);
+let marks  = store.get("fc2_marks", {});
+let lesson = "all", onlyWeak = false, order = [], idx = 0, flipped = false, editingId = null;
 
-/* ---------- 資料 ---------- */
-function allCards(){
-  const base = BASE.filter(c => !store.deleted.includes(c.id))
-    .map(c => Object.assign({}, c, store.edits[c.id] || {}, {base:true}));
-  const added = store.added.map(c => Object.assign({}, c, {base:false}));
-  return base.concat(added).sort((a,b) => (a.lesson - b.lesson) || a.id.localeCompare(b.id));
+function all(){
+  return BASE.filter(c=>!hidden.includes(c.id)).map(c=>edits[c.id]?Object.assign({},c,edits[c.id]):c).concat(custom);
 }
-function cardById(id){ return allCards().find(c => c.id === id); }
-
-/* ---------- 狀態 ---------- */
-let lessonFilter = 0;   // 0 = 全部
-let onlyWeak = false;
-let deck = [];          // 目前牌組的 id 順序
-let idx = 0;
-let flipped = false;
-
-function buildDeck(keepId){
-  deck = allCards()
-    .filter(c => !lessonFilter || c.lesson === lessonFilter)
-    .filter(c => !onlyWeak || marks[c.id] === "dunno")
-    .map(c => c.id);
-  const k = keepId ? deck.indexOf(keepId) : -1;
-  idx = k >= 0 ? k : Math.min(idx, Math.max(deck.length - 1, 0));
-  flipped = false;
+const byId = id => all().find(c=>c.id===id);
+function deck(){
+  let d = all().filter(c => lesson==="all" || String(c.lesson)===lesson);
+  if(onlyWeak) d = d.filter(c => marks[c.id]==="weak");
+  return d;
 }
+function rebuild(keep){
+  const d = deck(), ids = d.map(c=>c.id);
+  order = keep ? order.filter(id=>ids.includes(id)).concat(ids.filter(id=>!order.includes(id))) : ids;
+  if(idx >= order.length) idx = 0;
+  flipped = false; render(); renderTabs(); renderList();
+}
+const esc = s => String(s??"").replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
 
-/* ---------- 工具 ---------- */
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-const lessonName = n => "第 " + n + " 課";
-
-/* ---------- 畫面 ---------- */
 function renderTabs(){
-  const tabs = $("#tabs"); tabs.innerHTML = "";
-  [0,1,2,3].forEach(n => {
+  const t = document.getElementById("tabs"); t.innerHTML = "";
+  [["all","全部"],["1","第 1 課"],["2","第 2 課"],["3","第 3 課"]].forEach(([v,l])=>{
+    const n = all().filter(c=>v==="all"||String(c.lesson)===v).length;
     const b = document.createElement("button");
-    b.type = "button";
-    b.textContent = n ? lessonName(n) : "全部";
-    b.setAttribute("aria-pressed", String(n === lessonFilter));
-    b.onclick = () => { lessonFilter = n; idx = 0; buildDeck(); renderAll(); };
-    tabs.appendChild(b);
+    b.textContent = `${l}（${n}）`; b.setAttribute("aria-pressed", lesson===v);
+    b.onclick = ()=>{ lesson=v; idx=0; rebuild(); };
+    t.appendChild(b);
   });
 }
-
-function renderStage(){
-  const stage = $("#stage");
-  if(!deck.length){
-    stage.innerHTML = '<div class="scene"><p class="empty">' + (onlyWeak ? "這個範圍沒有標成「不熟」的卡片。" : "這個範圍還沒有卡片，按「＋ 新增卡片」加入。") + "</p></div>";
-    $("#count").textContent = "0 / 0";
+function render(){
+  const stage = document.getElementById("stage");
+  const done = order.filter(id=>marks[id]==="know").length;
+  document.getElementById("count").textContent = order.length ? `第 ${idx+1} / ${order.length} 張　已會 ${done}` : "";
+  if(!order.length){
+    stage.innerHTML = `<div class="scene"><div class="face empty" style="position:relative;aspect-ratio:4/3.4">${onlyWeak?"這一組沒有「不熟」的卡片了 🎉":"這一課還沒有卡片，點「新增卡片」加進來。"}</div></div>`;
     return;
   }
-  const c = cardById(deck[idx]);
-  const mark = marks[c.id] === "know" ? "・✓ 會了" : marks[c.id] === "dunno" ? "・✗ 不熟" : "";
-  const chars = Array.from(c.word);
-  const cells = chars.map(ch => '<div class="cell"><span>' + esc(ch) + "</span></div>").join("");
-  stage.innerHTML =
-    '<div class="scene"><div class="flip' + (flipped ? " on" : "") + '" id="flip" tabindex="0" role="button" aria-label="翻面">' +
-      '<div class="face front">' +
-        '<span class="tag">' + lessonName(c.lesson) + esc(mark) + "</span>" +
-        '<button type="button" class="editBtn" id="editCur">修改</button>' +
-        '<div class="word' + (chars.length > 3 ? " long" : "") + '">' + cells + "</div>" +
-        '<span class="hint">點一下翻面</span>' +
-      "</div>" +
-      '<div class="face back">' +
-        '<span class="tag">' + lessonName(c.lesson) + esc(mark) + "</span>" +
-        "<h2>" + esc(c.word) + "</h2>" +
-        (c.zy ? '<span class="zy">' + esc(c.zy) + "</span>" : "") +
-        '<p class="mean">' + esc(c.mean) + "</p>" +
-        (c.extra ? '<div class="extra">' + esc(c.extra) + "</div>" : "") +
-      "</div>" +
-    "</div></div>";
-  const weakN = allCards().filter(x => (!lessonFilter || x.lesson === lessonFilter) && marks[x.id] === "dunno").length;
-  $("#count").textContent = (idx + 1) + " / " + deck.length + (weakN ? "　不熟 " + weakN : "");
-
-  const flip = $("#flip");
-  flip.onclick = toggleFlip;
-  flip.onkeydown = e => { if(e.key === " " || e.key === "Enter"){ e.preventDefault(); toggleFlip(); } };
-  $("#editCur").onclick = e => { e.stopPropagation(); openEdit(c.id); };
+  const c = byId(order[idx]); const chars=[...c.word];
+  const mark = marks[c.id]==="know"?"✓ 會了":marks[c.id]==="weak"?"✗ 不熟":"";
+  stage.innerHTML = `<div class="scene"><div class="flip ${flipped?"on":""}" id="card" tabindex="0" role="button" aria-label="點一下翻面">
+    <div class="face front"><span class="tag">第 ${c.lesson} 課　${mark}</span>
+      <div class="word ${chars.length>3?"long":""}">${chars.map(ch=>`<div class="cell"><span>${esc(ch)}</span></div>`).join("")}</div>
+      <span class="hint">點卡片翻面（空白鍵也可以）</span></div>
+    <div class="face back"><span class="tag">第 ${c.lesson} 課</span>
+      <button class="editBtn" id="editHere">修改</button>
+      <h2>${esc(c.word)}</h2>${c.zy?`<span class="zy">${esc(c.zy)}</span>`:""}
+      <p class="mean">${esc(c.mean)}</p>${c.extra?`<div class="extra">${esc(c.extra)}</div>`:""}</div>
+  </div></div>`;
+  document.getElementById("card").onclick = toggle;
+  document.getElementById("editHere").onclick = e=>{ e.stopPropagation(); openEdit(c.id); };
 }
-
 function renderList(){
-  const list = $("#list"); list.innerHTML = "";
-  allCards().forEach(c => {
-    const row = document.createElement("div");
-    const m = marks[c.id];
-    row.innerHTML =
-      '<span class="w">' + esc(c.word) + (c.zy ? " <small>" + esc(c.zy) + "</small>" : "") +
-        " <small>" + lessonName(c.lesson) + (c.base ? "" : "・自訂") + (store.edits[c.id] ? "・已修改" : "") + "</small></span>" +
-      '<span class="m ' + (m === "know" ? "k" : m === "dunno" ? "d" : "") + '">' + (m === "know" ? "✓" : m === "dunno" ? "✗" : "") + "</span>";
-    const b = document.createElement("button");
-    b.type = "button"; b.textContent = "修改";
-    b.onclick = () => openEdit(c.id);
-    row.appendChild(b);
-    list.appendChild(row);
+  const l = document.getElementById("list"); l.innerHTML = "";
+  deck().forEach(c=>{
+    const row=document.createElement("div");
+    const changed = edits[c.id] || c.id.startsWith("u");
+    row.innerHTML=`<span class="w">${esc(c.word)} <small>第${c.lesson}課${changed?"・已修改":""}</small></span>`;
+    const b=document.createElement("button"); b.textContent="修改"; b.onclick=()=>openEdit(c.id);
+    row.appendChild(b); l.appendChild(row);
   });
 }
+function toggle(){ flipped=!flipped; const el=document.getElementById("card"); if(el) el.classList.toggle("on",flipped); }
+function go(d){ if(!order.length) return; idx=(idx+d+order.length)%order.length; flipped=false; render(); }
+function markCard(v){ if(!order.length) return; marks[order[idx]]=v; store.set("fc2_marks",marks);
+  if(onlyWeak && v==="know") rebuild(true); else go(1); }
 
-function renderAll(){ renderTabs(); renderStage(); renderList(); }
-
-/* ---------- 操作 ---------- */
-function toggleFlip(){
-  flipped = !flipped;
-  const f = $("#flip"); if(f) f.classList.toggle("on", flipped);
-}
-function go(d){
-  if(!deck.length) return;
-  idx = (idx + d + deck.length) % deck.length;
-  flipped = false; renderStage();
-}
-function mark(v){
-  if(!deck.length) return;
-  const id = deck[idx];
-  marks[id] = v; save(LS_MARKS, marks);
-  if(onlyWeak && v === "know"){
-    deck.splice(idx, 1);
-    if(idx >= deck.length) idx = 0;
-    flipped = false; renderStage(); renderList();
-  } else {
-    renderList();
-    go(1);
-  }
-}
-
-$("#prev").onclick = () => go(-1);
-$("#next").onclick = () => go(1);
-$("#flipBtn").onclick = toggleFlip;
-$("#know").onclick = () => mark("know");
-$("#dunno").onclick = () => mark("dunno");
-$("#shuffle").onclick = () => {
-  for(let i = deck.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [deck[i], deck[j]] = [deck[j], deck[i]]; }
-  idx = 0; flipped = false; renderStage();
-};
-$("#onlyWeak").onchange = e => { onlyWeak = e.target.checked; idx = 0; buildDeck(); renderAll(); };
-$("#resetMarks").onclick = () => {
-  if(!confirm("清除所有「會了／不熟」紀錄？")) return;
-  marks = {}; save(LS_MARKS, marks); idx = 0; buildDeck(); renderAll();
-};
-$("#restoreAll").onclick = () => {
-  if(!confirm("把所有卡片還原成原始內容？自訂新增的卡片也會刪除。")) return;
-  store = {edits:{}, deleted:[], added:[]}; save(LS_EDITS, store); idx = 0; buildDeck(); renderAll();
-};
-$("#exportBtn").onclick = () => {
-  const box = $("#exportBox");
-  box.style.display = "block"; $("#exportHint").style.display = "block";
-  box.value = JSON.stringify(store, null, 1);
-  box.focus(); box.select();
-};
-
-document.addEventListener("keydown", e => {
-  if($("#dlg").open) return;
-  const t = e.target;
-  if(t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT")) return;
-  if(e.key === "ArrowLeft") go(-1);
-  else if(e.key === "ArrowRight") go(1);
-  else if(e.key === "1") mark("dunno");
-  else if(e.key === "2") mark("know");
-});
-
-/* ---------- 編輯對話框 ---------- */
-const dlg = $("#dlg");
-let editingId = null;
-
+const dlg = document.getElementById("dlg");
+const F = id => document.getElementById(id);
 function openEdit(id){
   editingId = id;
-  const c = id ? cardById(id) : null;
-  $("#dlgTitle").textContent = c ? "修改卡片" : "新增卡片";
-  $("#fLesson").value = String(c ? c.lesson : (lessonFilter || 1));
-  $("#fWord").value = c ? c.word : "";
-  $("#fZy").value = c ? c.zy : "";
-  $("#fMean").value = c ? c.mean : "";
-  $("#fExtra").value = c ? c.extra : "";
-  $("#delBtn").style.display = c ? "" : "none";
-  $("#revertBtn").style.display = (c && c.base && store.edits[c.id]) ? "" : "none";
+  const c = id ? byId(id) : {lesson: lesson==="all"?1:+lesson, word:"", zy:"", mean:"", extra:""};
+  F("dlgTitle").textContent = id ? "修改卡片" : "新增卡片";
+  F("fLesson").value=String(c.lesson); F("fWord").value=c.word; F("fZy").value=c.zy||""; F("fMean").value=c.mean; F("fExtra").value=c.extra||"";
+  F("revertBtn").style.display = (id && edits[id]) ? "" : "none";
+  F("delBtn").style.display = id ? "" : "none";
   dlg.showModal();
-  $("#fWord").focus();
 }
-$("#addBtn").onclick = () => openEdit(null);
-$("#cancelBtn").onclick = () => dlg.close();
-
-$("#editForm").onsubmit = e => {
+F("editForm").onsubmit = e=>{
   e.preventDefault();
-  const data = {
-    lesson: +$("#fLesson").value,
-    word: $("#fWord").value.trim(),
-    zy: $("#fZy").value.trim(),
-    mean: $("#fMean").value.trim(),
-    extra: $("#fExtra").value.trim()
-  };
-  if(!data.word || !data.mean) return;
-  let keep;
-  if(!editingId){
-    const id = "u-" + Date.now().toString(36);
-    store.added.push(Object.assign({id}, data)); keep = id;
-  } else {
-    const c = cardById(editingId);
-    if(c.base){
-      const orig = BASE.find(b => b.id === editingId);
-      const same = ["lesson","word","zy","mean","extra"].every(k => orig[k] === data[k]);
-      if(same) delete store.edits[editingId]; else store.edits[editingId] = data;
-    } else {
-      const i = store.added.findIndex(a => a.id === editingId);
-      if(i >= 0) store.added[i] = Object.assign({id: editingId}, data);
-    }
-    keep = editingId;
-  }
-  save(LS_EDITS, store);
-  dlg.close();
-  buildDeck(keep); renderAll();
+  const v = {lesson:+F("fLesson").value, word:F("fWord").value.trim(), zy:F("fZy").value.trim(), mean:F("fMean").value.trim(), extra:F("fExtra").value.trim()};
+  if(!v.word||!v.mean) return;
+  if(!editingId){ custom.push(Object.assign({id:"u"+Date.now()},v)); store.set("fc2_custom",custom); }
+  else if(editingId.startsWith("u")){ custom=custom.map(c=>c.id===editingId?Object.assign({},c,v):c); store.set("fc2_custom",custom); }
+  else { edits[editingId]=v; store.set("fc2_edits",edits); }
+  dlg.close(); rebuild(true);
 };
-
-$("#delBtn").onclick = () => {
-  if(!editingId) return;
-  const c = cardById(editingId);
-  if(!confirm("刪除「" + c.word + "」這張卡片？")) return;
-  if(c.base){ if(!store.deleted.includes(editingId)) store.deleted.push(editingId); delete store.edits[editingId]; }
-  else store.added = store.added.filter(a => a.id !== editingId);
-  delete marks[editingId]; save(LS_MARKS, marks);
-  save(LS_EDITS, store);
-  dlg.close();
-  buildDeck(); renderAll();
+F("cancelBtn").onclick=()=>dlg.close();
+F("revertBtn").onclick=()=>{ delete edits[editingId]; store.set("fc2_edits",edits); dlg.close(); rebuild(true); };
+F("delBtn").onclick=()=>{
+  if(!confirm("刪除這張卡片？")) return;
+  if(editingId.startsWith("u")){ custom=custom.filter(c=>c.id!==editingId); store.set("fc2_custom",custom); }
+  else { hidden.push(editingId); store.set("fc2_hidden",hidden); }
+  dlg.close(); rebuild(true);
 };
-
-$("#revertBtn").onclick = () => {
-  if(!editingId) return;
-  delete store.edits[editingId]; save(LS_EDITS, store);
-  dlg.close();
-  buildDeck(editingId); renderAll();
+F("restoreAll").onclick=()=>{ if(confirm("把所有修改和刪除還原成原始內容？（自己新增的卡片會保留）")){ edits={}; hidden=[]; store.set("fc2_edits",edits); store.set("fc2_hidden",hidden); rebuild(); } };
+F("addBtn").onclick=()=>openEdit(null);
+F("exportBtn").onclick=()=>{
+  const box=F("exportBox");
+  const n=Object.keys(edits).length+hidden.length+custom.length;
+  box.value = n ? JSON.stringify({edits,hidden,custom}) : "目前沒有任何修改。";
+  box.style.display=""; F("exportHint").style.display = n?"":"none";
+  box.focus(); box.select();
 };
-
-/* ---------- 啟動 ---------- */
-buildDeck(); renderAll();
+F("prev").onclick=()=>go(-1); F("next").onclick=()=>go(1); F("flipBtn").onclick=toggle;
+F("know").onclick=()=>markCard("know"); F("dunno").onclick=()=>markCard("weak");
+F("shuffle").onclick=()=>{ for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]];} idx=0; flipped=false; render(); };
+F("resetMarks").onclick=()=>{ if(confirm("清除所有「會了／不熟」紀錄？")){ marks={}; store.set("fc2_marks",marks); rebuild(); } };
+F("onlyWeak").onchange=e=>{ onlyWeak=e.target.checked; idx=0; rebuild(); };
+document.addEventListener("keydown",e=>{
+  if(dlg.open || ["INPUT","TEXTAREA","SELECT"].includes(e.target.tagName)) return;
+  if(e.key===" "){ e.preventDefault(); toggle(); }
+  if(e.key==="ArrowRight") go(1);
+  if(e.key==="ArrowLeft") go(-1);
+});
+rebuild();
 </script>
 </body>
 </html>
